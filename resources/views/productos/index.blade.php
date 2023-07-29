@@ -35,7 +35,7 @@
                                                 <img src="{{asset('storage/'.$producto->imagen)}}" alt="{{$producto->nombre}}" class="img-thumbnail" width="80">
                                             </td>
                                             <td class="text-white">
-                                                <form action="{{route('productos.destroy',$producto->id)}}" method="POST">
+                                                <form action="{{route('productos.destroy',$producto->id)}}" method="POST" class="formulario-eliminar">
                                                     @can('editar-producto')
                                                         <a href="{{route('productos.edit',$producto->id)}}" class="btn btn-outline-warning">
                                                             <i class="fas fa-pencil-alt"></i>
