@@ -10,7 +10,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-body">
-                            @can('crear-blog')
+                            @can('crear-producto')
                                 <a class="btn btn-outline-primary" href="{{route('productos.create')}}">
                                     <i class="fas fa-plus"></i>
                                 </a>
@@ -25,14 +25,14 @@
                                     <th class="text-white">Acciones</th>
                                 </thead>
                                 <tbody>
-                                    @foreach($producto as $producto)
+                                    @foreach($productos as $producto)
                                         <tr>
                                             <td class="text-white">{{$producto->id}}</td>
                                             <td class="text-white">{{$producto->nombre}}</td>
                                             <td class="text-white">{{$producto->descripcion}}</td>
                                             <td class="text-white">${{$producto->precio}}</td>
                                             <td class="text-white">
-                                                <img src="{{asset($producto->imagen)}}" alt="{{$producto->nombre}}" class="img-fluid">
+                                                <img src="{{asset('storage/'.$producto->imagen)}}" alt="{{$producto->nombre}}" class="img-thumbnail" width="80">
                                             </td>
                                             <td class="text-white">
                                                 <form action="{{route('productos.destroy',$producto->id)}}" method="POST">
@@ -54,6 +54,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            <div class="pagination justify-contend-end">
+                                {!! $productos->links() !!}
+                            </div>
                         </div>
                     </div>
                 </div>

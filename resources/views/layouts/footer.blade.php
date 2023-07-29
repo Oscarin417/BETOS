@@ -1,3 +1,3 @@
 <div class="footer-left">
-    BETOS &#174; {{ date('Y') }}
+    BETO'S &#174; {{ date('Y') }}
 </div>

@@ -6,7 +6,7 @@ use Illuminate\Database\Seeder;
 
 use Spatie\Permission\Models\Permission;
 
-class SedderTablaPermisos extends Seeder
+class SeederTablaPermisos extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,17 +16,19 @@ class SedderTablaPermisos extends Seeder
     public function run()
     {
         $permisos = [
-            //tabla roles
+            //Operaciones sobre tabla roles
             'ver-rol',
             'crear-rol',
             'editar-rol',
-            'eliminar-rol',
-            //tabla productos
+            'borrar-rol',
+
+            //Operacions sobre tabla productos
             'ver-producto',
             'crear-producto',
             'editar-producto',
-            'eliminar-producto',
+            'borrar-producto'
         ];
+
         foreach ($permisos as $permiso) {
             Permission::create(['name' => $permiso]);
         }

@@ -5,18 +5,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Producto;
+use App\Traits\TraitSubirArchivo;
+use Illuminate\Support\Str;
 
 class ProductoController extends Controller
 {
+    use TraitSubirArchivo;
+
     function __construct()
     {
         $this->middleware(
-            'permission:ver-producto|crear-producto|editar-producto|borrar-producto',
+            'permission:ver-producto|crear-producto|editar-producto|eliminar-producto',
             ['only' => ['index']]
         );
         $this->middleware('permission:crear-producto', ['only' => ['create', 'store']]);
         $this->middleware('permission:editar-producto', ['only' => ['edit', 'update']]);
-        $this->middleware('permission:borrar-producto', ['only' => ['destroy']]);
+        $this->middleware('permission:eliminar-producto', ['only' => ['destroy']]);
     }
 
     /**
@@ -26,8 +30,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $producto = Producto::all();
-        return view('productos.index', compact('producto'));
+        $productos = Producto::paginate(5);
+        return view('productos.index', compact('productos'));
     }
 
     /**
@@ -55,17 +59,21 @@ class ProductoController extends Controller
             'imagen' => 'required|image|mimes:jpeg,jpg,png,svg'
         ]);
 
-        $producto = $request->all();
+        $producto = new Producto();
+        $producto->nombre = $request->get('nombre');
+        $producto->descripcion = $request->get('descripcion');
+        $producto->precio = $request->get('precio');
 
-        if ($request->hasFile('imagen')) {
+
+        if ($request->has('imagen')) {
             $imagen = $request->file('imagen');
-            $rutaGuardarImg = 'imagen/';
-            $imagenProducto = date('YmdHis') . "." . $imagen->getClientOriginalExtension();
-            $imagen->move($rutaGuardarImg, $imagenProducto);
-            $producto['imagen'] = "$imagenProducto";
+            $nombreImagen = Str::random(15);
+            $folder = 'portadas';
+            $imagenCargada = $this->subirArchivo($imagen, $folder, 'public', $nombreImagen);
+            $producto->imagen = $imagenCargada;
         }
 
-        Producto::create($request->all());
+        $producto->save();
         return redirect()->route('productos.index');
     }
 
@@ -88,7 +96,7 @@ class ProductoController extends Controller
      */
     public function edit(Producto $producto)
     {
-        return view('producto.editar', compact('producto'));
+        return view('productos.editar', compact('producto'));
     }
 
     /**
@@ -98,7 +106,7 @@ class ProductoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Producto $producto)
+    public function update(Request $request, $id)
     {
         request()->validate([
             'nombre' => 'required',
@@ -106,17 +114,20 @@ class ProductoController extends Controller
             'precio' => 'required',
         ]);
 
-        $prod = $request->all();
-        if ($imagen = $request->file('imagen')) {
-            $rutaGuardarImg = 'imagen/';
-            $imagenProducto = date('YmdHis') . "-" . $imagen->getClientOriginalExtension();
-            $imagen->move($rutaGuardarImg, $imagenProducto);
-            $prod['imagen'] = "$imagenProducto";
-        } else {
-            unset($prod['imagen']);
+        $producto = Producto::find($id);
+        $producto->nombre = $request->get('nombre');
+        $producto->descripcion = $request->get('descripcion');
+        $producto->precio = $request->get('precio');
+
+        if ($request->has('imagen')) {
+            $imagen = $request->file('imagen');
+            $nombreImagen = Str::random(15);
+            $folder = 'portadas';
+            $imagenCargada = $this->subirArchivo($imagen, $folder, 'public', $nombreImagen);
+            $producto->imagen = $imagenCargada;
         }
 
-        $producto->update($request->all());
+        $producto->save();
         return redirect()->route('productos.index');
     }
 
