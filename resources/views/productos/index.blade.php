@@ -22,6 +22,7 @@
                                     <th class="text-white">Descripcion</th>
                                     <th class="text-white">Precio</th>
                                     <th class="text-white">Imagen</th>
+                                    <th class="text-white">Cantidad</th>
                                     <th class="text-white">Acciones</th>
                                 </thead>
                                 <tbody>
@@ -34,6 +35,7 @@
                                             <td class="text-white">
                                                 <img src="{{asset('storage/'.$producto->imagen)}}" alt="{{$producto->nombre}}" class="img-thumbnail" width="80">
                                             </td>
+                                            <td class="text-white">{{$producto->quanty}}</td>
                                             <td class="text-white">
                                                 <form action="{{route('productos.destroy',$producto->id)}}" method="POST" class="formulario-eliminar">
                                                     @can('editar-producto')

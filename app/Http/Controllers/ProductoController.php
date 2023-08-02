@@ -63,6 +63,7 @@ class ProductoController extends Controller
         $producto->nombre = $request->get('nombre');
         $producto->descripcion = $request->get('descripcion');
         $producto->precio = $request->get('precio');
+        $producto->quanty = $request->get('quanty');
 
 
         if ($request->has('imagen')) {
@@ -118,6 +119,7 @@ class ProductoController extends Controller
         $producto->nombre = $request->get('nombre');
         $producto->descripcion = $request->get('descripcion');
         $producto->precio = $request->get('precio');
+        $producto->quanty = $request->get('quanty');
 
         if ($request->has('imagen')) {
             $imagen = $request->file('imagen');

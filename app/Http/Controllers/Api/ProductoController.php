@@ -33,6 +33,7 @@ class ProductoController extends Controller
         $pro->descripcion = $request->descripcion;
         $pro->precio = $request->precio;
         $pro->imagen = $request->imagen;
+        $pro->quanty = $request->get('quanty');
 
         $pro->save();
     }
@@ -62,6 +63,7 @@ class ProductoController extends Controller
         $pro->descripcion = $request->descripcion;
         $pro->precio = $request->precio;
         $pro->imagen = $request->imagen;
+        $pro->quanty = $request->get('quanty');
 
         $pro->save();
 

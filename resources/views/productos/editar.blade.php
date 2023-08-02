@@ -51,6 +51,12 @@
                                             <input type="file" name="imagen" class="form-control" value="{{$producto->imagen}}">
                                         </div>
                                     </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <label for="imagen">Cantidad</label>
+                                            <input type="number" name="quanty" id="quanty" class="form-control" value="{{$producto->quanty}}">
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-outline-success">
                                     <i class="fas fa-check-circle"></i>
