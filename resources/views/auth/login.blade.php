@@ -62,6 +62,9 @@
                         Login
                     </button>
                 </div>
+                <a href="{{url('login-google')}}" class="btn btn-block btn-danger">
+                    Iniciar sesion con Google
+                </a>
             </form>
         </div>
     </div>

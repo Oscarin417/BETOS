@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RolController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\ProductoController;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Socialite\Facades\Socialite;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +33,50 @@ Route::group(['middleware' => ['auth']], function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
+
+
+Route::get('/login-google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/google-callback', function () {
+    $user = Socialite::driver('google')->user();
+    $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
+
+    if ($userExists) {
+        Auth::login($userExists);
+    } else {
+        $userNew = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'external_id' => $user->id,
+            'external_auth' => 'google',
+        ]);
+        Auth::login($userNew);
+    }
+    return redirect('/home');
+});
+
+Route::get('/login-facebook', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/facebook-callback', function () {
+    $user = Socialite::driver('facebook')->user();
+    $userExists = User::where('external_id', $user->id)->where('external_auth', 'facebook')->first();
+
+    if ($userExists) {
+        Auth::login($userExists);
+    } else {
+        $userNew = User::create([
+            'name' => $user->name,
+            'email' => $user->email,
+            'avatar' => $user->avatar,
+            'external_id' => $user->id,
+            'external_auth' => 'facebook',
+        ]);
+        Auth::login($userNew);
+    }
+    return redirect('/home');
+});
