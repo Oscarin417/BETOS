@@ -20,7 +20,7 @@ use Laravel\Socialite\Facades\Socialite;
 */
 
 Route::get('/', function () {
-    return redirect('https://betos-mu.vercel.app/');
+    return view('welcome');
 });
 
 
