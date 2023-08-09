@@ -13,7 +13,9 @@
         "axios": "^0.21",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "webpack": "^5.88.2",
+        "webpack-cli": "^5.1.4"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.15.4",
@@ -25,12 +27,11 @@
         "jsrender": "^1.0.5",
         "popper.js": "^1.12",
         "sass": "^1.15.2",
-        "sass-loader": "^7.1.0",
+        "sass-loader": "^13.3.2",
         "select2": "^4.0.13",
         "sweetalert": "^1.1.3",
         "sweetalert2": "^11.7.20",
         "vue": "^2.5.17",
-        "vue-template-compiler": "^2.6.12",
-        "webpack": "^3.0.0"
+        "vue-template-compiler": "^2.6.12"
     }
 }
